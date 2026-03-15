@@ -1,7 +1,3 @@
-"""
-Preface xxv
-"""
-
 import pygame
 import math
 
@@ -24,23 +20,13 @@ theta = math.pi / 6
 d_theta = 0.1
 
 
-def traducir(coordenadas):
-    ESCALA = LARGO - (2 * PADDING)
+def traducir(coordenadas, escala=LARGO // 2):
+    ESCALA = escala - (2 * PADDING)
     x, y = coordenadas
     x_pantalla = PADDING + (x * ESCALA)
     y_pantalla = (ALTO - PADDING) - (y * ESCALA)
 
     return (int(x_pantalla), int(y_pantalla))
-
-
-def dibujar_triangulo_recto(pantalla: pygame.Surface, theta: float):
-    """
-    Si llamamos a=cateto adyacente ,b=cateto opuesto sabemos que h = hipotenusa
-    cos(theta) = a/h y sin(theta) = b/h
-    entonces tan(theta) = sin(theta)/cos(theta) = (b/h) / (a/h) = b/a
-
-    Sabemos que a = 1 por lo que T = tan(theta) = b
-    """
 
 
 while True:
@@ -80,6 +66,14 @@ while True:
 
     pygame.draw.line(pantalla, GRIS, traducir(B), traducir(D), GROSOR)
     pygame.draw.polygon(pantalla, NEGRO, list(map(traducir, (A, D, E))))
+
+    inicio, fin = 0, math.pi / 2
+    num = 100
+    step = (fin - inicio) / num
+    for angulo in [inicio + step * i for i in range(num)]:
+        x = L * math.cos(angulo)
+        y = L * math.sin(angulo)
+        pygame.draw.aacircle(pantalla, NEGRO, traducir((x, y)), 1)
 
     pygame.display.flip()
 
