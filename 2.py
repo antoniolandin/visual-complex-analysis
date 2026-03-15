@@ -1,3 +1,8 @@
+"""
+Introduction 9
+1.5 A complex number can be interpreted as a rotation and expansion of the plane
+"""
+
 import pygame
 import math
 
